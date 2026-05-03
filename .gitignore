@@ -1,0 +1,28 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# --- SİBER KALKAN ÖZEL EKLEMELER ---
+
+# Rust Derleme Çıktıları (Devasa boyutludur, depoyu şişirmemeli)
+/rust_core/target/
+**/*.rs.bk
+
+# Güvenlik & İmza Dosyaları (Asla açık kaynağa sızmamalı)
+*.jks
+*.keystore
+
+# Alt Modül Build Klasörleri (Ana klasördeki /build dışında app içindekiler)
+app/build/
