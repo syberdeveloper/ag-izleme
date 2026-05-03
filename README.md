@@ -20,7 +20,7 @@
 
 | DNS Sorguları | Uygulama & Bant Genişliği | Siber Kalkan Sözlüğü |
 |---------------|---------------------------|----------------------|
-| ![DNS](assets/screenshots/dns_sorgulari.jpg) | ![Bant](assets/screenshots/uygulama__bant_genisligi.jpg) | ![Sözlük](assets/screenshots/siber_kalkan_sozlugu.jpg) |
+| ![DNS](assets/screenshots/dns_sorgulari.jpg) | ![Bant](assets/screenshots/uygulama_bant_genisligi.jpg) | ![Sözlük](assets/screenshots/siber_kalkan_sozlugu.jpg) |
 
 ---
 
