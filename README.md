@@ -690,7 +690,7 @@ fn send_to_kotlin(env: &mut JNIEnv, callback: &GlobalRef, msg: &str) {
 | `getConnectionOwnerUid()` | API 29+ gerektirir; eski sürümlerde uygulama adı çözümlenmez |
 | AbuseIPDB Rate Limit | Dakikada 30 istek; ücretsiz planda günlük 1000 istek limiti vardır |
 | GeoIP Doğruluğu | `ipwho.is` ücretsiz, VPN/proxy IP'lerinde doğruluk düşebilir |
-| Syslog Sunucu | Varsayılan `192.168.1.100:514`; değiştirilmesi gerekir |
+| Syslog Sunucu |Varsayılan olarak 192.168.1.100:514 ayarlıdır; uygulamanın "Ayarlar" menüsünden kendi SIEM/Log sunucunuzun IP'si ile değiştirilebilir.|
 | PCAP Boyutu | Yoğun trafikte dosya boyutu hızla büyür; uzun süreli kayıtta dikkat edin |
 | Uygulama Kendi Trafiği | `addDisallowedApplication` ile muaf tutulmuştur; istihbarat sorguları tünelden geçmez |
 | Paket Tamponu (Rust) | Paket başına max 512 byte uygulama yükü okunur |
