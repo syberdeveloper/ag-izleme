@@ -51,9 +51,8 @@ class NetworkMonitorService : VpnService() {
     //  VPN Başlat / Durdur
 
     private fun startVpn() {
-        if (vpnInterface != null) return   // Zaten çalışıyor
+        if (vpnInterface != null) return 
 
-        // --- Foreground Service: Android 8+ için zorunlu ---
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             startForeground(NOTIF_ID, buildNotification(),
                 android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE)
@@ -68,7 +67,6 @@ class NetworkMonitorService : VpnService() {
         builder.setSession("Siber Kalkan")
         builder.setMtu(1500)
 
-        // Kendi uygulamamızı tünelden çıkar (GeoIP sorguları kesilmesin)
         try { builder.addDisallowedApplication(packageName) } catch (_: Exception) {}
 
         vpnInterface = builder.establish()

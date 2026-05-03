@@ -507,28 +507,17 @@ Tehdit skoru > 75 → öncelik 10 (critical), diğerleri → 14 (informational).
 
 ## 10. API Anahtarları & Yapılandırma
 
-### AbuseIPDB
+Siber Kalkan, dış servis entegrasyonları için dinamik bir yapılandırma sunar. Kod içinde hiçbir değişiklik yapmanıza gerek yoktur. Uygulama içerisindeki **Ayarlar (> CONFIG)** menüsünden aşağıdaki bilgileri girebilirsiniz:
 
-`NetworkLogState.kt` içindeki `fetchAbuseScore()` fonksiyonunda:
-
-```text
-val apiKey = "YOUR_ABUSEIPDB_API_KEY"  // ← Buraya gerçek anahtarınızı yazın
-```
-
-API anahtarı girilmezse AbuseIPDB sorguları atlanır; diğer tüm tehdit istihbaratı özellikleri çalışmaya devam eder.
-
-### Syslog Sunucu Adresi
-
-```text
-private const val SYSLOG_SERVER = "192.168.1.100"  // ← Kendi sunucunuz
-private const val SYSLOG_PORT   = 514
-```
+* **Syslog Sunucu IP:** Kendi yerel SIEM veya log sunucunuzun IP adresi (Varsayılan: `192.168.1.100`).
+* **AbuseIPDB API Key:** IP itibar sorguları için ücretsiz AbuseIPDB API anahtarınız. Anahtar girilmezse bu sorgular atlanır, uygulamanın diğer tüm DPI ve yerel analiz özellikleri çalışmaya devam eder.
 
 ### Kırmızı Bölge Ülkeleri
 
 ```text
 private val RED_ZONES = setOf("RU", "CN", "IR", "KP", "SY", "CU")
 ```
+Engellenen ülke listesini (Red Zones) değiştirmek isterseniz, NetworkLogState.kt içindeki RED_ZONES setini düzenleyebilirsiniz.
 
 ---
 
@@ -701,7 +690,7 @@ fn send_to_kotlin(env: &mut JNIEnv, callback: &GlobalRef, msg: &str) {
 | `getConnectionOwnerUid()` | API 29+ gerektirir; eski sürümlerde uygulama adı çözümlenmez |
 | AbuseIPDB Rate Limit | Dakikada 30 istek; ücretsiz planda günlük 1000 istek limiti vardır |
 | GeoIP Doğruluğu | `ipwho.is` ücretsiz, VPN/proxy IP'lerinde doğruluk düşebilir |
-| Syslog Sunucu | Varsayılan `192.168.1.100:514`; değiştirilmesi gerekir |
+| Syslog Sunucu |Varsayılan olarak 192.168.1.100:514 ayarlıdır; uygulamanın "Ayarlar" menüsünden kendi SIEM/Log sunucunuzun IP'si ile değiştirilebilir.|
 | PCAP Boyutu | Yoğun trafikte dosya boyutu hızla büyür; uzun süreli kayıtta dikkat edin |
 | Uygulama Kendi Trafiği | `addDisallowedApplication` ile muaf tutulmuştur; istihbarat sorguları tünelden geçmez |
 | Paket Tamponu (Rust) | Paket başına max 512 byte uygulama yükü okunur |
@@ -711,26 +700,11 @@ fn send_to_kotlin(env: &mut JNIEnv, callback: &GlobalRef, msg: &str) {
 ## 15. Katkı Rehberi
 
 ### Yeni Ekran Ekleme
-
 1. `DrawerScreen` enum'una yeni bir değer ekleyin.
 2. `MainActivity.kt` içindeki `when (currentScreen)` bloğuna yeni composable'ı ekleyin.
 3. Drawer menüsüne otomatik olarak eklenir.
 
-### Yeni Anomali Türü Ekleme
-
-**Rust tarafında** (`lib.rs`):
-1. `ConnectionTracker` struct'ına yeni alan ekleyin.
-2. `record_packet()` içinde kaydı güncelleyin.
-3. Tespit fonksiyonunu ekleyin (örn. `fn is_new_anomaly()`).
-4. `build_anomaly_type()` ve `compute_threat_score()` içine yeni etiket ekleyin.
-
-**Kotlin tarafında** (`NetworkLogState.kt`):
-1. `addLog()` fonksiyonunda JSON'dan yeni alanı parse edin.
-2. `PacketData` data class'ına alan ekleyin.
-3. İlgili UI bileşeninde gösterimi güncelleyin.
-
 ### Kod Stili
-
 - Kotlin: [Kotlin Coding Conventions](https://kotlinlang.org/docs/coding-conventions.html)
 - Rust: `rustfmt` varsayılan kuralları (`cargo fmt`)
 - Türkçe yorum satırları korunmalıdır (proje dili)
@@ -739,8 +713,7 @@ fn send_to_kotlin(env: &mut JNIEnv, callback: &GlobalRef, msg: &str) {
 
 ## Lisans
 
-Bu proje eğitim ve araştırma amaçlıdır. Üretim ortamında kullanım için ek güvenlik denetimleri önerilir.
-
+Bu proje **MIT Lisansı** ile lisanslanmıştır. Tamamen ücretsizdir ve açık kaynaktır. Projeyi dilediğiniz gibi kullanabilir, kopyalayabilir, değiştirebilir, ticari projelerinize dahil edebilir ve dağıtabilirsiniz. Detaylar için depodaki `LICENSE` dosyasına göz atabilirsiniz.
 ---
 
 *Son güncelleme: 2026 — Siber Kalkan Geliştirme Ekibi*
